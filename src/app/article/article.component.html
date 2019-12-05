@@ -1,5 +1,14 @@
+<h2> {{message}}</h2>
+<button
+  [disabled]="service.started$ | async"
+  (click)="listen()"
+>listen
+</button>
 <div class="flex">
   <app-info-article *ngFor="let recette of recettes"
                     [infoRecette]="recette"
                     class="item"></app-info-article>
 </div>
+<!--<mat-spinner *ngIf="loading" style="margin-left: auto;margin-right: auto"></mat-spinner>-->
+
+
