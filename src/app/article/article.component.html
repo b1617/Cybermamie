@@ -1,9 +1,4 @@
 <h2> {{message}}</h2>
-<button
-  [disabled]="service.started$ | async"
-  (click)="listen()"
->listen
-</button>
 <div class="flex">
   <app-info-article *ngFor="let recette of recettes"
                     [infoRecette]="recette"

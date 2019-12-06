@@ -9,7 +9,7 @@ export enum KEY {
   TOP_ARROW = 38,
   BOTTOM_ARROW = 40,
   ECHAP = 27,
-  CTRL = 18
+  CTRL = 17
 }
 
 @Component({

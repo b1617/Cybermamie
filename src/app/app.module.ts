@@ -9,22 +9,26 @@ import {
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
-  MatIconModule, MatInputModule,
-  MatListModule, MatProgressSpinnerModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatProgressSpinnerModule,
   MatSidenavModule,
   MatToolbarModule
 } from '@angular/material';
+
 import {ArticleComponent} from './article/article.component';
 import {InfoArticleComponent} from './info-article/info-article.component';
 import {RecetteService} from './services/recette.service';
 import {FormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ArticleComponent,
-    InfoArticleComponent
+    InfoArticleComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,7 @@ import {FormsModule} from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
   providers: [RecetteService],
   bootstrap: [AppComponent]

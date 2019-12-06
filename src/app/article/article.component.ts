@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {RecetteService} from '../services/recette.service';
-import {resultList, RxSpeechRecognitionService,} from '@kamiazya/ngx-speech-recognition';
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css'],
-  providers: [RxSpeechRecognitionService]
+  providers: []
 })
 export class ArticleComponent implements OnInit {
 
@@ -17,34 +16,35 @@ export class ArticleComponent implements OnInit {
   maxLength;
   loading = false;
 
-  constructor(private recetteService: RecetteService, public service: RxSpeechRecognitionService) {
+  constructor(private recetteService: RecetteService) {
   }
 
 
-  listen() {
-    this.loading = true;
-    this.service
-      .listen()
-      .pipe(resultList)
-      .subscribe((list: any) => {
-        this.message = list.item(0).item(0).transcript;
-        console.log('RxComponent:onresult', this.message, list);
-        if (this.message == 'gauche') {
-          if (this.value > -1) {
-            this.moveRecettes(--this.value);
-          }
-        } else if (this.message == 'droite') {
-          if (this.value < this.maxLength) {
-            this.moveRecettes(++this.value);
-          }
-        } else if (this.message == 'tout') {
-          this.recettes = this.allRecettes;
-        } else {
-          this.filterRecettes(this.message);
-        }
-        this.loading = false;
-      });
-  }
+  // listen() {
+  //   this.loading = true;
+  //   this.service
+  //     .listen()
+  //     .pipe(resultList)
+  //     .subscribe((list: any) => {
+  //       this.message = list.item(0).item(0).transcript;
+  //       console.log('RxComponent:onresult', this.message, list);
+  //       if (this.message == 'gauche') {
+  //         if (this.value > -1) {
+  //           this.moveRecettes(--this.value);
+  //         }
+  //       } else if (this.message == 'droite') {
+  //         if (this.value < this.maxLength) {
+  //           this.moveRecettes(++this.value);
+  //         }
+  //       } else if (this.message == 'tout') {
+  //         this.recettes = this.allRecettes;
+  //       } else {
+  //         this.filterRecettes(this.message);
+  //       }
+  //       this.loading = false;
+  //     });
+  // }
+
 
   getRecettes(): void {
     this.recettes = this.recetteService.list();
@@ -85,7 +85,7 @@ export class ArticleComponent implements OnInit {
 
     this.recetteService.activateMicro.subscribe((activate) => {
       if (activate) {
-        this.listen();
+        //   this.listen();
       }
     });
   }
