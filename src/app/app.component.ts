@@ -30,7 +30,6 @@ export class AppComponent {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(e: KeyboardEvent) {
-    console.log(event);
     let element = document.getElementById('searchbar');
     if (e.keyCode == KEY.CTRL) {
       element.focus();
@@ -46,6 +45,10 @@ export class AppComponent {
       element.blur();
     } else if (e.keyCode == KEY.SPACE) {
       this.recetteService.activeMicro(true);
+    } else if (e.keyCode == KEY.BOTTOM_ARROW) {
+      console.log('down');
+      window.scrollTo(document.body.scrollLeft,
+        document.body.scrollTop - 500);
     }
   }
 

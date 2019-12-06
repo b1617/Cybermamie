@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {RecetteService} from '../services/recette.service';
+import {resultList, RxSpeechRecognitionService} from '@kamiazya/ngx-speech-recognition';
+
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css'],
-  providers: []
+  providers: [RxSpeechRecognitionService]
 })
 export class ArticleComponent implements OnInit {
 
@@ -15,35 +17,39 @@ export class ArticleComponent implements OnInit {
   value = -1;
   maxLength;
   loading = false;
+  showSearchButton: boolean;
+  speechData: string;
 
-  constructor(private recetteService: RecetteService) {
+
+  constructor(private recetteService: RecetteService, public  service: RxSpeechRecognitionService) {
+    this.showSearchButton = true;
+    this.speechData = '';
   }
 
-
-  // listen() {
-  //   this.loading = true;
-  //   this.service
-  //     .listen()
-  //     .pipe(resultList)
-  //     .subscribe((list: any) => {
-  //       this.message = list.item(0).item(0).transcript;
-  //       console.log('RxComponent:onresult', this.message, list);
-  //       if (this.message == 'gauche') {
-  //         if (this.value > -1) {
-  //           this.moveRecettes(--this.value);
-  //         }
-  //       } else if (this.message == 'droite') {
-  //         if (this.value < this.maxLength) {
-  //           this.moveRecettes(++this.value);
-  //         }
-  //       } else if (this.message == 'tout') {
-  //         this.recettes = this.allRecettes;
-  //       } else {
-  //         this.filterRecettes(this.message);
-  //       }
-  //       this.loading = false;
-  //     });
-  // }
+  listen() {
+    this.loading = true;
+    this.service
+      .listen()
+      .pipe(resultList)
+      .subscribe((list: any) => {
+        this.message = list.item(0).item(0).transcript;
+        console.log('RxComponent:onresult', this.message, list);
+        if (this.message == 'gauche') {
+          if (this.value > -1) {
+            this.moveRecettes(--this.value);
+          }
+        } else if (this.message == 'droite') {
+          if (this.value < this.maxLength) {
+            this.moveRecettes(++this.value);
+          }
+        } else if (this.message == 'tout') {
+          this.recettes = this.allRecettes;
+        } else {
+          this.filterRecettes(this.message);
+        }
+        this.loading = false;
+      });
+  }
 
 
   getRecettes(): void {
@@ -63,6 +69,7 @@ export class ArticleComponent implements OnInit {
       this.recettes = this.allRecettes.filter(recette => recette.name.toLowerCase().indexOf(text) > -1);
     }
   }
+
 
   ngOnInit() {
     this.getRecettes();
@@ -85,7 +92,19 @@ export class ArticleComponent implements OnInit {
 
     this.recetteService.activateMicro.subscribe((activate) => {
       if (activate) {
+        // if (navigator.getUserMedia) {
         //   this.listen();
+        // } else {
+        //   navigator.mediaDevices.getUserMedia({audio: true})
+        //     .then((stream) => {
+        //       console.log('use mic');
+        //       this.listen();
+        //     })
+        //     .catch((err) => {
+        //       console.log('No mic for you!');
+        //     });
+        // }
+        this.listen();
       }
     });
   }

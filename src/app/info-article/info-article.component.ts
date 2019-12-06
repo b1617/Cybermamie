@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-info-article',
@@ -7,10 +7,13 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 })
 export class InfoArticleComponent implements OnInit {
 
- @Input() infoRecette: any;
-  constructor() { }
+  @Input() infoRecette: any;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
+
 
 }
